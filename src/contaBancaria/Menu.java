@@ -1,9 +1,10 @@
 package contaBancaria;
 
 import java.util.Scanner;
-
+import conta.model.Conta;
 import contaBancaria.util.Cores;
 
+@SuppressWarnings("unused")
 public class Menu {
     public static void main(String[] args) {
         
