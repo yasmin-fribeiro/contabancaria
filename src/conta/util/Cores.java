@@ -1,4 +1,4 @@
-package contaBancaria.util;
+package conta.util;
 
 public class Cores {
 
