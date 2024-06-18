@@ -105,7 +105,8 @@ public class Menu {
 				case 2 -> {
 					System.out.println("Digite o dia do Aniversário da Conta: ");
 					aniversario = leia.nextInt();
-					contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
+					contas.cadastrar(
+							new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
 				}
 				}
 				keyPress();
@@ -120,15 +121,64 @@ public class Menu {
 			case 3:
 				System.out.println(Cores.TEXT_WHITE + "Buscar Conta por número\n\n");
 
+				System.out.println("Digite o número da conta: ");
+				numero = leia.nextInt();
+
+				contas.procurarPorNumero(numero);
+
 				keyPress();
 				break;
 			case 4:
 				System.out.println(Cores.TEXT_WHITE + "Atualizar dados da Conta\n\n");
 
+				System.out.println("Digite  o número da conta: ");
+				numero = leia.nextInt();
+
+				var buscaContas = contas.buscarNaCollection(numero);
+
+				if (buscaContas != null) {
+
+					tipo = buscaContas.getTipo();
+
+					System.out.println("Digite o número da agência: ");
+					agencia = leia.nextInt();
+					System.out.println("Digite o nome do titular: ");
+					leia.skip("\\R?");
+					titular = leia.nextLine();
+
+					System.out.println("Digite o saldo da Conta (R$): ");
+					saldo = leia.nextFloat();
+
+					switch (tipo) {
+					case 1 -> {
+						System.out.println("Digite o limite de Crédito (R$): ");
+						limite = leia.nextFloat();
+
+						contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
+					}
+					case 2 -> {
+						System.out.println("Digite o dia do aniversário da conta: ");
+						aniversario = leia.nextInt();
+
+						contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
+					}
+					default -> {
+						System.out.println("Tipo de conta inválido!");
+					}
+					}
+				} else {
+					System.out.println("A conta não foi encontrada!");
+				}
+
 				keyPress();
 				break;
 			case 5:
 				System.out.println(Cores.TEXT_WHITE + "Apagar Conta\n\n");
+
+				System.out.println("Digite o número da conta: ");
+				numero = leia.nextInt();
+
+				contas.deletar(numero);
 
 				keyPress();
 				break;
